@@ -1,0 +1,27 @@
+{
+  "name": "is-it-snowing-in-pdx",
+  "version": "1.0.0-beta.1",
+  "description": "An Alexa Skill for telling you if it is currently snowing in Portland.",
+  "main": "index.js",
+  "dependencies": {
+    "alexa-sdk": "^1.0.13"
+  },
+  "devDependencies": {
+    "eslint": "^4.6.1",
+    "eslint-config-airbnb-base": "^12.0.0",
+    "eslint-plugin-import": "^2.7.0"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/LucasHill/is-it-snowing-in-pdx-skill.git"
+  },
+  "author": "Lucas Hill",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/LucasHill/is-it-snowing-in-pdx-skill/issues"
+  },
+  "homepage": "https://github.com/LucasHill/is-it-snowing-in-pdx-skill#readme"
+}
