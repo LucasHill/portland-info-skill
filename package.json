@@ -7,12 +7,15 @@
     "alexa-sdk": "^1.0.13"
   },
   "devDependencies": {
-    "eslint": "^4.6.1",
-    "eslint-config-airbnb-base": "^12.0.0",
-    "eslint-plugin-import": "^2.7.0"
+    "@types/alexa-sdk": "^1.0.10",
+    "@types/node": "^8.0.28",
+    "tslint": "^5.7.0",
+    "tslint-config-airbnb": "^5.2.1",
+    "typescript": "^2.5.2"
   },
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "tslint -c tslint.json 'src/**/*.ts'",
+    "build": "yarn install --production --frozen-lockfile --modules-folder=dist/node_modules && tsc && cd dist && zip -r lamda_assets.zip ."
   },
   "repository": {
     "type": "git",
