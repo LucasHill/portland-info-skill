@@ -1,10 +1,12 @@
 /* tslint:disable:function-name */
 import { Handlers } from 'alexa-sdk';
+import darkSky from './darkSky';
 
 const responses = {
   SNOWING: 'YES! Commence panic.',
   NOT_SNOWING: 'No.',
   STOP_MESSAGE: 'Feel free to check again in a few seconds.',
+  ISSUE_MESSAGE: 'I encountered an issue but you can probably just look outside.',
   HELP_MESSAGE: 'You can ask if it is snowing in Portland.',
 };
 
@@ -13,9 +15,15 @@ const handlers: Handlers<any> = {
     this.emit('IsItSnowingIntent');
   },
   IsItSnowingIntent() {
-    const isItSnowing = responses.NOT_SNOWING;
     // this.response.cardRenderer(SKILL_NAME, randomFact);
-    this.emit(':tell', isItSnowing);
+    darkSky.isSnowingNow().then(
+      (isSnowing) => {
+        const message = isSnowing ? responses.SNOWING : responses.NOT_SNOWING;
+        this.emit(':tell', message);
+      }).catch((error) => {
+        this.emit(':tell', responses.ISSUE_MESSAGE);
+      });
+
   },
   'AMAZON.HelpIntent'() {
     this.emit(':tell', responses.HELP_MESSAGE);
