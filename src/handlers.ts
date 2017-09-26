@@ -1,38 +1,55 @@
 /* tslint:disable:function-name */
 import { Handlers } from 'alexa-sdk';
-import darkSky from './darkSky';
+import darkSky from './dark-sky';
 
-const responses = {
+const snowResponses = {
   SNOWING: 'YES! Commence panic.',
   NOT_SNOWING: 'No.',
-  STOP_MESSAGE: 'Feel free to check again in a few seconds.',
   ISSUE_MESSAGE: 'I encountered an issue but you can probably just look outside.',
-  HELP_MESSAGE: 'You can ask if it is snowing in Portland.',
+};
+
+const generalResponse = {
+  HELP_MESSAGE: 
+    'You can ask questions like is it snowing in Portland or where should I go in Portland?',
+  WHERE_TO_GO: 'Yamhill Pub, located at 223 SW Yamhill St.',
+  WHAT_TO_DO: 'Have you thought about volunteering at Free Geek?',
+  STOP_MESSAGE: 'OKAY, GOODBYE!',  
 };
 
 const handlers: Handlers<any> = {
   LaunchRequest() {
-    this.emit('IsItSnowingIntent');
+    this.emit('HelpIntent');
   },
+  
   IsItSnowingIntent() {
     // this.response.cardRenderer(SKILL_NAME, randomFact);
     darkSky.isSnowingNow().then(
       (isSnowing) => {
-        const message = isSnowing ? responses.SNOWING : responses.NOT_SNOWING;
+        const message = isSnowing ? snowResponses.SNOWING : snowResponses.NOT_SNOWING;
         this.emit(':tell', message);
       }).catch((error) => {
-        this.emit(':tell', responses.ISSUE_MESSAGE);
+        this.emit(':tell', snowResponses.ISSUE_MESSAGE);
       });
 
   },
-  'AMAZON.HelpIntent'() {
-    this.emit(':tell', responses.HELP_MESSAGE);
+
+  WhereToGoIntent() {
+    this.emit(':tell', generalResponse.WHERE_TO_GO);
   },
+
+  WhatToDoIntent() {
+    this.emit(':tell', generalResponse.WHAT_TO_DO);
+  },
+
+  'AMAZON.HelpIntent'() {
+    this.emit(':tell', generalResponse.HELP_MESSAGE);
+  },
+
   'AMAZON.CancelIntent'() {
-    this.emit(':tell', responses.STOP_MESSAGE);
+    this.emit(':tell', generalResponse.STOP_MESSAGE);
   },
   'AMAZON.StopIntent'() {
-    this.emit(':tell', responses.STOP_MESSAGE);
+    this.emit(':tell', generalResponse.STOP_MESSAGE);
   },
 };
 
