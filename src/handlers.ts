@@ -1,6 +1,6 @@
 /* tslint:disable:function-name */
 import { Handlers } from 'alexa-sdk';
-import darkSky from './darkSky';
+import darkSky from './dark-sky';
 
 const responses = {
   SNOWING: 'YES! Commence panic.',
